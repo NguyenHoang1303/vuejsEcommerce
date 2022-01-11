@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p style="font-size: 25px; font-weight: 600">List Orders</p>
+    <p style="font-size: 25px; font-weight: 600">Orders</p>
     <template>
       <div id="components-form-demo-advanced-search" style="margin-bottom: 15px">
         <a-form class="ant-advanced-search-form" @submit="handleSearch">

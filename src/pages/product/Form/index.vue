@@ -125,35 +125,48 @@ export default {
         values.price = parseInt(values.price);
         if (!err) {
           if (this.id) {
-            values.id = parseInt(this.id);
-            try {
-              await update(values)
-              this.$message.success("Success update product");
-            } catch (e) {
-              console.log(e)
-              if (e.data.status === 400){
-                this.$message.error(e.data.message);
-              }else {
-                this.$message.error("Bạn không có quyền cập nhật sản phẩm");
-              }
-
-            }
+           await this.updateProduct(values)
           } else {
-            try {
-              await store(values)
-              this.$message.success("Success create new product");
-            } catch (e) {
-              console.log(e)
-              if (e.data.status === 400){
-                this.$message.error(e.data.message);
-              }else {
-                this.$message.error("Bạn không có quyền tạo mới sản phẩm");
-              }
-            }
+            await this.createProduct(values)
           }
         }
       });
     },
+
+    async createProduct(values) {
+      try {
+        const res = await store(values)
+        console.log("res: ", res)
+        let message = res.data.message;
+        if (res.data.status !== 200) {
+          this.$message.error(message);
+        } else {
+          this.$message.success(message);
+        }
+      } catch (e) {
+        console.log(e)
+        this.$message.success(e.data.message);
+      }
+    },
+
+    async updateProduct(values){
+      values.id = parseInt(this.id);
+      try {
+       const res = await update(values)
+        let message = res.data.message;
+        if (res.data.status !== 200){
+          this.$message.error(message);
+        }else {
+          this.$message.success(message);
+        }
+
+      } catch (e) {
+        console.log(e)
+        this.$message.error(e.data.message);
+      }
+    }
+
+    ,
     clearForm() {
       this.form.setFieldsValue({
         name: undefined,

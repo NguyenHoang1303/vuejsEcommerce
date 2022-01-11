@@ -17,7 +17,7 @@
             </a-col>
             <a-col :span="6">
               <a-form-item>
-                <a-select v-model="params.categoryId" placeholder="Select category">
+                <a-select @change="handleCate" v-model="params.categoryId" placeholder="Select category">
                   <a-select-option v-for="cate in categories" :key="cate.id" :value="cate.id">
                     {{ cate.name }}
                   </a-select-option>
@@ -26,7 +26,7 @@
             </a-col>
             <a-col :span="6">
               <a-form-item>
-                <a-select default-value="lucy" @change="handleChangePrice" v-model="params.optionPrice"
+                <a-select  @change="handleChangePrice" v-model="params.optionPrice"
                           placeholder="Select price">
                   <a-select-option value="1">
                     0 - 200.000 đ
@@ -82,61 +82,18 @@
 
         </span>
       </a-table>
-      <a-pagination style="margin-top: 15px" :total="totalData" @change="onChange"/>
+      <a-pagination style="margin-top: 15px" :total="totalData" @change="onChangePage"/>
     </a-card>
   </div>
 
 </template>
 <script>
 import moment from 'moment'
-import {deleteOne, list} from "../service";
-import {params} from "../params";
+import {deleteOne, products} from "../service";
+import {params, columns} from "../params";
 import {categories} from "../../../service/CategoryService";
 
-const columns = [
-  {
-    dataIndex: 'id',
-    key: 'id',
-    slots: {title: 'customTitle'},
-    scopedSlots: {customRender: 'name'},
-  },
-  {
-    title: 'Image',
-    dataIndex: 'thumbnail',
-    key: 'thumbnail',
-    scopedSlots: {customRender: 'thumbnail'},
-  },
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Price',
-    dataIndex: 'price',
-    key: 'price',
-    scopedSlots: {customRender: 'price'},
-  },
-  {
-    title: 'Description',
-    key: 'description',
-    dataIndex: 'description',
 
-  },
-  {
-    title: 'Created at',
-    key: 'createdAt',
-    dataIndex: 'createdAt',
-    scopedSlots: {customRender: 'createdAt'},
-
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    scopedSlots: {customRender: 'action'},
-    width: 110,
-  },
-];
 
 
 export default {
@@ -144,14 +101,14 @@ export default {
     return {
       data: [],
       categories: [],
-      columns,
+      columns : columns,
       totalData: undefined,
       expand: false,
       params: params
     };
   },
 
-  created() {
+  mounted() {
     this.getData();
   },
 
@@ -160,7 +117,7 @@ export default {
 
     async getData() {
       try {
-        const {data} = await list(this.params);
+        const {data} = await products(this.params);
         this.data = data.data;
         this.totalData = data.pagination.totalItems;
         const cate = await categories();
@@ -170,7 +127,7 @@ export default {
       }
     },
 
-    onChange(current) {
+    onChangePage(current) {
       this.params.page = current;
       this.getData();
 
@@ -182,9 +139,13 @@ export default {
       this.getData();
     },
     handleChangePrice(value) {
-      alert(value)
-      this.handleChange(value)
+      this.handlerFilterByPrice(value)
       this.getData();
+    },
+
+    handleCate(cate){
+      this.params.categoryId = parseInt(cate)
+      this.getData()
     },
 
 
@@ -205,8 +166,7 @@ export default {
             this.$message.success("delete successfully");
             await this.getData();
           } catch (e) {
-            console.log(e);
-            this.$message.error("Delete fail, You do not have the right to delete the product");
+            this.$message.error(e.data.message);
           }
         },
         onCancel: () => {

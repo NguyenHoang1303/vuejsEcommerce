@@ -1,39 +1,46 @@
-
 import AppLayout from '../../layouts/AppLayout'
 
 const routes = [
     {
-        path: '/demo/accounts',
+        path: '/demo/roles',
         component: AppLayout,
-        name: 'account',
+        name: 'role',
         meta: {
-            title: 'Account',
+            title: 'Role',
             icon: 'team'
         },
         children: [
             {
                 path: 'list',
                 component: () => import('./List'),
-                name: 'accountList',
+                name: 'roleList',
                 meta: {
                     title: 'List',
                 }
             },
             {
                 path: 'create',
-                component: () => import('./Form'),
-                name: 'accountForm',
+                component: () => import('./Create'),
+                name: 'roleCreate',
                 meta: {
-                    title: 'Form',
+                    title: 'Create',
                 }
             },
             {
                 path: 'edit/:id',
-                component: () => import('./Form'),
-                name: 'accountEdit',
+                component: () => import('./Create'),
+                name: 'roleEdit',
                 meta: {
-                    title: 'Form',
+                    title: 'Edit',
                     hidden: true
+                }
+            },
+            {
+                path: 'test',
+                component: () => import('./Test'),
+                name: 'testRole',
+                meta: {
+                    title: 'Test',
                 }
             },
 

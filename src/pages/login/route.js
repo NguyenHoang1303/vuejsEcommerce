@@ -6,8 +6,8 @@ const routes =[
         component: Login,
         name: 'Login',
         meta: {
-            title: 'Login',
-            icon: 'login'
+            title: 'Logout',
+            icon: 'logout'
         },
     }
 ]

@@ -4,6 +4,7 @@ import {orderRoutes} from "../pages/order";
 import {productRoutes} from "../pages/product";
 import {accountRoute} from "../pages/account";
 import {loginRoute} from "../pages/login";
+import {roleRoute} from "../pages/role";
 
 Vue.use(VueRouter)
 
@@ -11,6 +12,7 @@ const routes = [
     ...orderRoutes,
     ...productRoutes,
     ...accountRoute,
+    ...roleRoute,
     ...loginRoute
 ]
 
