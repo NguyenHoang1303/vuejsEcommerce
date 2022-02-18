@@ -29,10 +29,10 @@ const routes = [
             },
             {
                 path: 'edit/:id',
-                component: () => import('./Form'),
+                component: () => import('./Detail'),
                 name: 'accountEdit',
                 meta: {
-                    title: 'Form',
+                    title: 'Detail',
                     hidden: true
                 }
             },

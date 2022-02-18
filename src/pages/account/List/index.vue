@@ -1,8 +1,6 @@
 <template>
   <div>
     <p style="font-size: 25px; font-weight: 600">Accounts</p>
-
-
     <a-card>
       <a-table :pagination="false" bordered :columns="columns" :data-source="data" rowKey="id">
         <span slot="customTitle" :key="data.id">Id</span>
@@ -82,6 +80,8 @@ export default {
         this.privileges = privilege.data.data;
         this.data = response.data.data;
         this.totalData = response.data.pagination.totalItems
+        console.log(this.data[1].privileges)
+
       } catch (e) {
         console.log(e)
       }
@@ -126,6 +126,7 @@ export default {
               this.$message.error(res.data.message)
             }else {
               this.$message.success(res.data.message)
+
             }
             await this.getData()
           }catch (e) {

@@ -1,7 +1,7 @@
 import http from "../../config";
 
 const privileges = () => http.get(`manager/privileges`);
-const roles = () => http.get(`manager/roles`);
+const getAllRole = () => http.get(`manager/roles`);
 const rolesDetail = (id) => http.get(`manager/roles/detail?id=${id}`);
 const deleteRole = (id) => http.delete(`manager/roles/delete?id=${id}`);
 
@@ -40,7 +40,7 @@ const updateRole = (form)=>{
 
 export {
     privileges,
-    roles,
+    getAllRole,
     rolesDetail,
     addRole,
     deleteRole,

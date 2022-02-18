@@ -44,7 +44,7 @@
 
 
 import {params} from "../params";
-import {deleteRole, roles} from "../service";
+import {deleteRole, getAllRole} from "../service";
 import {columns} from "../colums";
 
 export default {
@@ -68,7 +68,7 @@ export default {
   methods: {
     async getData() {
       try {
-        const response = await roles()
+        const response = await getAllRole()
         this.data = response.data.data;
         this.totalData = response.data.pagination.totalItems
       } catch (e) {

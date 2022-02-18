@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Creat role</h2>
+    <h2>Creat account</h2>
     <a-card>
       <a-form style="width: 50%;margin: auto">
         <a-form-item label="Name">
